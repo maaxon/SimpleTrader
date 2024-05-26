@@ -1,0 +1,38 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+   
+    <v:String x:Key="TitleMainWindow">Простой Торговец</v:String>
+    <v:String x:Key="Home">Дом</v:String>
+    <v:String x:Key="Portfolio">Портфолио</v:String>
+    <v:String x:Key="Buy">Купить</v:String>
+    <v:String x:Key="Sell">Продать</v:String>
+    <v:String x:Key="Search">Искать</v:String>
+    <v:String x:Key="Users">Пользователи</v:String>
+    <v:String x:Key="Stocks">Акции</v:String>
+    <v:String x:Key="Language">Рус</v:String>
+    <v:String x:Key="Queue">Очередь</v:String>
+    <v:String x:Key="Cash">Счёт</v:String>
+    <v:String x:Key="Top Assets">Популярные акции</v:String>
+    <v:String x:Key="Major Indexes">Лучшие биржи</v:String>
+    <v:String x:Key="Filters">Фильтры</v:String>
+    <v:String x:Key="Symbol">Символ</v:String>
+    <v:String x:Key="Price">Цена</v:String>
+    <v:String x:Key="Company">Компания</v:String>
+    <v:String x:Key="Exchange">Биржа</v:String>
+    <v:String x:Key="Switch theme">Смена темы</v:String>
+    <v:String x:Key="Switch language">Смена языка</v:String>
+    <v:String x:Key="Pay">Плата</v:String>
+    <v:String x:Key="All">Все</v:String>
+    <v:String x:Key="Profile">Профиль</v:String>
+    <v:String x:Key="Log Out">Выйти</v:String>
+    <v:String x:Key="Shares to sell">Количество:</v:String>
+    <v:String x:Key="Shares to buy">Количество:</v:String>
+    <v:String x:Key="Price per share">Цена за ед.:</v:String>
+    <v:String x:Key="Add to Queue">В очередь</v:String>
+    <v:String x:Key="Mode">Режим</v:String>
+    <v:String x:Key="Chart">График изменения цены</v:String>
+    <v:String x:Key="Desc">Описание</v:String>
+    <v:String x:Key="Changes">Изменение цены</v:String>
+   
+</ResourceDictionary>

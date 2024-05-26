@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="SimpleTrader.WPF.Controls.UserStocksCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SimpleTrader.WPF.Controls"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="1.4*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="{Binding Symbol}" />
+        <TextBlock Grid.Column="1" Text="{Binding Price, StringFormat={}{0:c}, FallbackValue=$0.00}" />
+        <WrapPanel Grid.Column="2">
+            <WrapPanel>
+                <WrapPanel.Style>
+                    <Style TargetType="WrapPanel">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowControlls}" Value="true">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </WrapPanel.Style>
+                <ui:Button Click="ButtonBase_OnClick" Icon="{ui:SymbolIcon LineHorizontal120}" />
+            </WrapPanel>
+            
+            <TextBlock Margin="10 0" Text="{Binding Shares}" />
+            <WrapPanel>
+                <WrapPanel.Style>
+                    <Style TargetType="WrapPanel">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowControlls}" Value="true">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </WrapPanel.Style>
+                <ui:Button Click="ButtonBase_OnClick2" Icon="{ui:SymbolIcon Add20}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <WrapPanel.Style>
+                    <Style TargetType="WrapPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowControlls}" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </WrapPanel.Style>
+                <Button Click="ButtonBase_OnClick3" Margin="10 0">Change</Button>
+            </WrapPanel>
+            <WrapPanel>
+                <WrapPanel.Style>
+                    <Style TargetType="WrapPanel">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowControlls}" Value="true">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </WrapPanel.Style>
+                <Button Command="{Binding ChangeAmount}" CommandParameter="{Binding AssetAmount}" Click="ButtonBase_OnClick3" Margin="10 0">Save</Button>
+            </WrapPanel>
+        </WrapPanel>
+    </Grid>
+</UserControl>

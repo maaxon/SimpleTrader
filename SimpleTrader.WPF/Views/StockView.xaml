@@ -1,0 +1,303 @@
+﻿<UserControl x:Class="SimpleTrader.WPF.Views.StockView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SimpleTrader.WPF.Views"
+             xmlns:custom="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
+             xmlns:controls="clr-namespace:SimpleTrader.WPF.Controls"
+             xmlns:context="clr-namespace:SimpleTrader.WPF.ViewModels"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            FontSize="18"
+            Text="{Binding CompanyName}" />
+<Grid Grid.Row="1" Margin="0 10">
+    <Grid.Style>
+        <Style TargetType="Grid">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+                   
+            </Style.Triggers>
+        </Style>
+    </Grid.Style>
+
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowChart}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                   
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+          
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <Border
+                Padding="16"
+                Background="#31D618"
+                BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="2,2,2,2"
+                CornerRadius="8,8,8,8"
+                MaxHeight="180"
+                MaxWidth="800"
+            >
+            <Grid Background="#31D618">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock TextWrapping="Wrap" MaxWidth="220" FontSize="28" Text="{Binding LocalDescription.CompanyName}"/>
+                <TextBlock Grid.Column="1" FontSize="24" Text="{Binding LocalDescription.Symbol}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Text="{DynamicResource Changes}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Margin="10 0 0 0" FontSize="12" Text="{DynamicResource Exchange}"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" FontSize="20" Text="{Binding Description.Changes, StringFormat={}{0:0.##\\%}, FallbackValue=0.00%}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" FontSize="20" Margin="10 0 0 0" Text="{Binding LocalDescription.Exchange}"/>
+                
+                <ui:Image 
+                    Grid.RowSpan="2"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    MaxHeight="100"
+                    Source="{Binding LocalDescription.Img}" />
+            </Grid>
+            </Border>
+            <Border
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Padding="16"
+                BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="2,2,2,2"
+                CornerRadius="8,8,8,8"
+                MaxHeight="250"
+                Width="350"  
+                Grid.Row="0" Grid.Column="1"  Margin="0 20 0 0">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Margin="0 10"
+                               HorizontalAlignment="Center"
+                               FontSize="32"
+                               Text="{Binding TotalPrice, StringFormat={}{0:C}}" />
+                    <WrapPanel Margin="0 10">
+                        <TextBlock Width="150" Text="{DynamicResource 'Shares to buy'}" />
+                        <TextBox Width="50" Text="{Binding SharesToBuy, UpdateSourceTrigger=PropertyChanged}" />
+                    </WrapPanel>
+                    <WrapPanel Margin="0 10">
+                        <TextBlock Width="150" Text="{DynamicResource 'Price per share'}" />
+                        <TextBlock MinWidth="50" FontWeight="Bold" Text="{Binding LocalDescription.Price, StringFormat={}{0:C}}" />
+                    </WrapPanel>
+                  
+                    <Button Margin="0 10" Padding="20 5"
+                            Content="{DynamicResource Buy}"
+                            FontSize="24"
+                            Command="{Binding BuyStockCommand}"
+                            />
+                </StackPanel>
+            </Border>
+            <StackPanel Grid.Column="0" Grid.Row="2">
+                <TextBlock FontSize="20" Margin="120 10 0 0" Text="{DynamicResource Chart}"/>
+                <controls:ChartPrinter  Margin="0 50 0 50 " HorizontalAlignment="Center"  DataContext="{Binding Candlestick}"/>
+            </StackPanel>
+            <StackPanel  Grid.Row="3">
+                <TextBlock FontSize="20" Margin="120 10 0 5" Text="{DynamicResource Desc}"/>
+                <Border
+                Padding="16"
+                BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="2,2,2,2"
+                CornerRadius="8,8,8,8"
+                MaxHeight="180"
+                MaxWidth="800"
+            >
+                <TextBlock TextWrapping="Wrap" Text="{Binding LocalDescription.Description}"/>
+            </Border>
+            </StackPanel>
+        </Grid>
+        <Grid >
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowChart}" Value="False">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+          
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="1" Margin="0 10 0 0"
+                       HorizontalAlignment="Center"
+                       DataContext="{Binding ErrorMessageViewModel}"
+                       Foreground="DarkRed"
+                       Text="{Binding Message}"
+                       Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+            <TextBlock Grid.Row="1" Margin="0 10 0 0"
+                       HorizontalAlignment="Center"
+                       DataContext="{Binding StatusMessageViewModel}"
+                       Foreground="DarkGreen"
+                       Text="{Binding Message}"
+                       Visibility="{Binding HasMessage, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Border
+                Padding="16"
+                Background="#31D618"
+                BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="2,2,2,2"
+                CornerRadius="8,8,8,8"
+                MaxHeight="180"
+                MaxWidth="800"
+            >
+            <Grid Background="#31D618">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock TextWrapping="Wrap" MaxWidth="220" FontSize="28" Text="{Binding LocalDescription.CompanyName}"/>
+                <TextBlock Grid.Column="1" FontSize="24" Text="{Binding LocalDescription.Symbol}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" FontSize="12" Text="{DynamicResource Changes}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Margin="10 0 0 0" FontSize="12" Text="{DynamicResource Exchange}"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" FontSize="20" Text="{Binding Description.Changes, StringFormat={}{0:0.##\\%}, FallbackValue=0.00%}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" FontSize="20" Margin="10 0 0 0" Text="{Binding LocalDescription.Exchange}"/>
+                
+                <ui:Image 
+                    Grid.RowSpan="2"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    MaxHeight="100"
+                    Source="{Binding LocalDescription.Img}" />
+            </Grid>
+            </Border>
+            <Border
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Padding="16"
+                BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="2,2,2,2"
+                CornerRadius="8,8,8,8"
+                MaxHeight="250"
+                Width="500"
+                 Grid.Row="1"  Margin="0 20 0 0">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Margin="0 10"
+                               HorizontalAlignment="Center"
+                               FontSize="32"
+                               Text="{Binding TotalPrice, StringFormat={}{0:C}}" />
+                    <WrapPanel Margin="0 10">
+                        <TextBlock Width="150" Text="{DynamicResource 'Shares to buy'}" />
+                        <TextBox Width="50" Text="{Binding SharesToBuy, UpdateSourceTrigger=PropertyChanged}" />
+                    </WrapPanel>
+                    <WrapPanel Margin="0 10">
+                        <TextBlock Width="150" Text="{DynamicResource 'Price per share'}" />
+                        <TextBlock MinWidth="50" FontWeight="Bold" Text="{Binding LocalDescription.Price, StringFormat={}{0:C}}" />
+                    </WrapPanel>
+                  
+                    <Button Margin="0 10" Padding="20 5"
+                            Content="{DynamicResource Buy}"
+                            FontSize="24"
+                            Command="{Binding BuyStockCommand}"
+                            />
+                </StackPanel>
+            </Border>
+           
+            <StackPanel Grid.Row="2">
+                <TextBlock Margin="30 10 0 0" FontSize="20" Text="{DynamicResource Chart}"/>
+                <controls:ChartPrinter  Margin="0 50 0 50 " HorizontalAlignment="Center"  DataContext="{Binding Candlestick}"/>
+            </StackPanel>
+            <StackPanel  Grid.Row="3">
+                <TextBlock FontSize="20" Margin="30 10 0 5" Text="{DynamicResource Desc}"/>
+                <Border
+                    Padding="16"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="2,2,2,2"
+                    CornerRadius="8,8,8,8"
+                    MaxHeight="180"
+                    MaxWidth="800"
+                >
+                    <TextBlock TextWrapping="Wrap" Text="{Binding LocalDescription.Description}"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+</Grid>
+        
+        <Grid Grid.Row="1" Margin="0 20 0 0">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <custom:LoadingSpinner
+                Grid.Row="0"
+                IsLoading="{Binding IsLoading}"
+                Thickness="5"
+                Color="{StaticResource BrushPrimary2}" />
+
+            <TextBlock
+                Grid.Row="1"
+                Margin="20"
+                FontSize="14"
+                Text="Loading..."
+                TextAlignment="Center" />
+        </Grid>
+        
+      
+    </Grid>
+</UserControl>

@@ -1,0 +1,41 @@
+﻿<ui:ContentDialog
+    x:Class="SimpleTrader.WPF.Controls.ShowAddQueueDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SimpleTrader.WPF.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Add to queue"
+    d:DesignHeight="700"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    CloseButtonText="Add"
+    DialogMaxWidth="750"
+    mc:Ignorable="d">
+
+    <ui:ContentDialog.Resources>
+        <Style BasedOn="{StaticResource {x:Type ui:ContentDialog}}" TargetType="{x:Type local:ShowAddQueueDialog}" />
+    </ui:ContentDialog.Resources>
+
+    <Grid MinWidth="400">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+       <StackPanel>
+           <Label>Price</Label>
+           <ui:NumberBox MinWidth="150"   Value="{Binding UserPrice, UpdateSourceTrigger=PropertyChanged}" />
+       </StackPanel>
+        <ui:DropDownButton Grid.Row="1" Content="{Binding Mode}" Margin="0 20 0 0" Icon="{ui:SymbolIcon ArrowCircleDownUp20}">
+            <ui:DropDownButton.Flyout>
+                <ContextMenu>
+                    <MenuItem Click="MenuItem_OnClick" Header="High"/>
+                    <MenuItem Click="MenuItem_OnClick2" Header="Low"/>
+                </ContextMenu>
+            </ui:DropDownButton.Flyout>
+        </ui:DropDownButton>
+    </Grid>
+</ui:ContentDialog>

@@ -1,0 +1,251 @@
+﻿<UserControl x:Class="SimpleTrader.WPF.Views.UserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SimpleTrader.WPF.Views"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:controls="clr-namespace:SimpleTrader.WPF.Controls"
+             xmlns:loadingSpinnerControl="clr-namespace:LoadingSpinnerControl;assembly=LoadingSpinnerControl"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid Margin="0 20 0 0">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <loadingSpinnerControl:LoadingSpinner
+                Grid.Row="0"
+                IsLoading="{Binding IsLoading}"
+                Thickness="5"
+                Color="{StaticResource BrushPrimary2}" />
+
+            <TextBlock
+                Grid.Row="1"
+                Margin="20"
+                FontSize="14"
+                Text="Loading..."
+                TextAlignment="Center" />
+        </Grid>
+        <Grid Margin="0 10">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="False">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Border 
+                Padding="16"
+                Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="2,2,2,2"
+                CornerRadius="8,8,8,8"
+                MaxWidth="600"
+                Margin="0 20"
+            >
+                
+                <Grid  HorizontalAlignment="Center" MinWidth="530">
+               
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                 <Image Margin="0 0 20 0"  MaxWidth="100"   HorizontalAlignment="Left" MaxHeight="100" Source="{Binding Img}"></Image>
+                <StackPanel Margin="0 10 0 0" Grid.Column="1" >
+                    <TextBlock  Text="{Binding Name}" HorizontalAlignment="Left" FontSize="35"/>
+                    <TextBlock  Text="{Binding Email}" HorizontalAlignment="Left" FontSize="14"/>
+
+                </StackPanel>
+                    <StackPanel Margin="0 5 0 0" Grid.Column="2">
+                    <TextBlock MinWidth="165" TextAlignment="Right" Grid.Column="2" Grid.Row="0"
+                            Text="{Binding Role}" HorizontalAlignment="Right"
+                            VerticalAlignment="Center" FontSize="40">
+                     <TextBlock.Style>
+                         <Style TargetType="TextBlock">
+                             <Style.Triggers>
+                                 <DataTrigger Binding="{Binding Role}" Value="BLOCKED">
+                                     <Setter Property="Foreground" Value="#E05858"/>
+                                 </DataTrigger>
+                                 <DataTrigger Binding="{Binding Role}" Value="USER">
+                                     <Setter Property="Foreground" Value="#799540"/>
+                                 </DataTrigger>
+                             </Style.Triggers>
+                         </Style>
+                     </TextBlock.Style>
+                   
+                 </TextBlock>
+                 <Grid Grid.Column="2"  Grid.Row="1" HorizontalAlignment="Right">
+                     <Grid.Style>
+                         <Style TargetType="Grid">
+                             <Setter Property="Visibility" Value="Collapsed"/>
+                             <Style.Triggers>
+                                 <DataTrigger Binding="{Binding Role}" Value="BLOCKED">
+                                     <Setter Property="Visibility" Value="Visible"/>
+                                 </DataTrigger>
+                             </Style.Triggers>
+                         </Style>
+                     </Grid.Style>
+                     <Button   Command="{Binding BlockUser}"
+                                 Content="Unblock"
+                                 HorizontalAlignment="Right"
+                                 VerticalAlignment="Center"/>
+
+                 </Grid>
+                     <Grid Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right">
+                 <Grid.Style>
+                     <Style TargetType="Grid" >
+                          <Setter Property="Visibility" Value="Collapsed"/>
+                         <Style.Triggers>
+                             <DataTrigger Binding="{Binding Role}" Value="USER">
+                                 <Setter Property="Visibility" Value="Visible"/>
+                             </DataTrigger>
+                         </Style.Triggers>
+                        
+                     </Style>
+                 </Grid.Style>
+                         <Button Style="{StaticResource Warning}"  Command="{Binding BlockUser}"
+                                 Content="Block"
+                                 HorizontalAlignment="Right"
+                                 VerticalAlignment="Center"/>
+
+                 </Grid>
+                    </StackPanel>
+                 
+             </Grid>
+                </Border>
+            <Grid HorizontalAlignment="Center" Grid.Row="1" Margin="0 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Margin="0 0 30 0" FontSize="35" HorizontalAlignment="Center">Balance: 
+                    <TextBlock
+                        FontSize="35"
+                        Text="{Binding Balance, StringFormat={}{0:c}, FallbackValue=$0.00}" />
+                </TextBlock>
+                <ui:NumberBox 
+                    VerticalAlignment="Bottom"
+                    MinWidth="170" Grid.Column="1" Margin="10 0 0 0"
+                    Icon="Money24"
+                    Value="{Binding Add,UpdateSourceTrigger=PropertyChanged}"
+                    PlaceholderText="Enter amount"
+                    MaxDecimalPlaces="2" 
+                    />
+                <Button Grid.Column="2"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding ChangeBalance}"
+                        CommandParameter="{Binding Add}"
+                        Margin="10 0">Plus</Button>
+                <Button Style="{StaticResource Warning}" Grid.Column="3"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding ChangeBalance}"
+                        CommandParameter="{Binding NegativeAdd}"
+                        >Minus</Button>
+            </Grid>
+            <Grid Grid.Row="2" VerticalAlignment="Center" MaxWidth="520">
+                <Button  Command="{Binding ShowDialog}" VerticalAlignment="Top" HorizontalAlignment="Right">Add stock</Button>
+                <Border
+                        MaxWidth="520"
+                        MinHeight="200"
+                        Padding="16"
+                        Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="2,2,2,2"
+                        CornerRadius="8,8,8,8"
+                        Margin="0 50 0 0 "
+                ><StackPanel>
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                
+                                <Style.Triggers>
+                                        
+                                    <DataTrigger Binding="{Binding IsEmptyList}" Value="True" >
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <TextBlock FontSize="32"
+                                   FontWeight="SemiBold"
+                                   
+                                   Text="User has no transactions">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        
+                                        <DataTrigger Binding="{Binding IsEmptyList}" Value="True" >
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <Grid Margin="0 0 0 10">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsEmptyList}" Value="True" >
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="1.4*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock FontWeight="SemiBold" Margin=" 5 0">Symbol</TextBlock>
+                            <TextBlock FontWeight="SemiBold"  Margin=" 10 0 0 0" Grid.Column="1">Price</TextBlock>
+                            <TextBlock FontWeight="SemiBold"  Margin=" 25 0 0 0" Grid.Column="2">Shares</TextBlock>
+                           
+                        </Grid>
+                        <ui:ListView MaxWidth="500"
+                                     ItemsSource="{Binding Cards}"
+                                     SelectionMode="Single">
+                        <ui:ListView.ItemTemplate>
+                            <DataTemplate>
+                                <controls:UserStocksCard />
+                            </DataTemplate>
+                        </ui:ListView.ItemTemplate>
+                    </ui:ListView>
+                    </StackPanel>
+                </Border>
+            </Grid>
+          </Grid>
+       
+    </Grid>
+</UserControl>

@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="SimpleTrader.WPF.Controls.UserCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:SimpleTrader.WPF.Controls"
+             mc:Ignorable="d"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"></ColumnDefinition>
+            <ColumnDefinition Width="2.6*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="1.5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+            <ui:Image
+                Source="{Binding Account.AccountHolder.Img}"
+                Grid.RowSpan="2"
+                Width="40"
+                Height="32"
+                Margin="6"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
+        <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="12,6,0,0"
+                FontWeight="Bold"
+                Text="{Binding Account.AccountHolder.Username}"/>
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="12,0,0,6"
+                Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                Text="{Binding Account.AccountHolder.Email}"/>
+            <TextBlock Grid.Column="2" Grid.RowSpan="2"
+                       Text="{Binding Role}" HorizontalAlignment="Center"
+                       VerticalAlignment="Center" FontSize="20">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Role}" Value="BLOCKED">
+                                <Setter Property="Foreground" Value="#E05858"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Role}" Value="USER">
+                                <Setter Property="Foreground" Value="#799540"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+                   
+            </TextBlock>
+        
+        <Button  Grid.RowSpan="2" Command="{Binding RenavigateCommand}" CommandParameter="{Binding Account.Id}" VerticalAlignment="Center" Grid.Column="3">Show</Button>
+    </Grid>
+</UserControl>

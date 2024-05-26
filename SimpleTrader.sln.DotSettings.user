@@ -1,0 +1,8 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="C:\Users\maxon\.nuget\packages\passwordboxmvvm\1.0.5\lib\netcoreapp3.1\PasswordBoxMVVM.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\maxon\.nuget\packages\fancycandles\2.7.1\lib\net472\FancyCandles.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\maxon\.nuget\packages\c1.win.financialchart\8.0.20233.643\lib\net462\C1.Win.FinancialChart.4.6.2.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\maxon\.nuget\packages\wpf-ui\3.0.4\lib\net462\Wpf.Ui.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=renavigator/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
